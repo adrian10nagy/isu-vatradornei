@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Destinația locului producerii evenimentului și Mijloace care pot produce arderea</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <!-- 1) Destinația locului producerii evenimentului -->
+      <h1 class="h4 mb-4 text-danger">Destinația locului producerii evenimentului</h1>
+
+      <div class="accordion mb-4" id="sectiunea1">
+        <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
+          <h2 class="accordion-header" id="heading1">
+            <button
+              class="accordion-button collapsed bg-white"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse1"
+              aria-expanded="false"
+              aria-controls="collapse1"
+            >
+              <span class="me-2 text-danger"><i class="bi bi-caret-down-square"></i></span>
+              Lista locațiilor posibile
+            </button>
+          </h2>
+          <div
+            id="collapse1"
+            class="accordion-collapse collapse"
+            aria-labelledby="heading1"
+            data-bs-parent="#sectiunea1"
+          >
+            <div class="accordion-body bg-white">
+              <div id="listaLocatii" class="list-group"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2) Sursa probabilă de aprindere -->
+      <h1 class="h4 mb-4 text-danger">Sursa Probabilă de Aprindere</h1>
+
+      <div class="accordion mb-4" id="sectiunea2">
+        <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
+          <h2 class="accordion-header" id="heading2">
+            <button
+              class="accordion-button collapsed bg-white"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse2"
+              aria-expanded="false"
+              aria-controls="collapse2"
+            >
+              <span class="me-2 text-danger"><i class="bi bi-fire"></i></span>
+              Lista surselor probabile de aprindere
+            </button>
+          </h2>
+          <div
+            id="collapse2"
+            class="accordion-collapse collapse"
+            aria-labelledby="heading2"
+            data-bs-parent="#sectiunea2"
+          >
+            <div class="accordion-body bg-white">
+              <div id="listaSursaAprindere" class="list-group"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3) Mijloace care pot produce arderea -->
+      <h1 class="h4 mb-4 text-danger">Mijloace care pot produce arderea</h1>
+      <div class="accordion mb-4" id="mijloaceAccordion"></div>
+
+      <!-- 4) Primul material care a ars -->
+      <h1 class="h4 mb-4 text-danger">Primul material care a ars</h1>
+      <div class="accordion" id="materialArsAccordion"></div>
+
+    </div>
+
+    <!-- 1) Fișierul de date (locatiiData, sursaAprindereData, mijloaceData, primulMaterialData) -->
+    <script src="date.js"></script>
+
+    <!-- 2) Script de randare -->
+    <script>
+      function renderLocatii() {
+        const container = document.getElementById('listaLocatii');
+        if (!container || !Array.isArray(locatiiData)) return;
+
+        locatiiData.forEach((it) => {
+          const div = document.createElement('div');
+          div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
+          div.innerHTML = `<strong>${it.nr} – ${it.den}</strong>`;
+          container.appendChild(div);
+        });
+      }
+
+      function renderSursaAprindere() {
+        const container = document.getElementById('listaSursaAprindere');
+        if (!container || !Array.isArray(sursaAprindereData)) return;
+
+        sursaAprindereData.forEach((it) => {
+          const div = document.createElement('div');
+          div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
+          div.innerHTML = `<strong>${it.code} – ${it.label}</strong>`;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMijloaceAccordion() {
+        const container = document.getElementById('mijloaceAccordion');
+        if (!container || !Array.isArray(mijloaceData)) return;
+
+        mijloaceData.forEach((cat, index) => {
+          const headerId = `mijloaceHeading${index}`;
+          const collapseId = `mijloaceCollapse${index}`;
+
+          const item = document.createElement('div');
+          item.className = 'accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2';
+
+          const h2 = document.createElement('h2');
+          h2.className = 'accordion-header';
+          h2.id = headerId;
+
+          const button = document.createElement('button');
+          button.className = 'accordion-button collapsed bg-white';
+          button.type = 'button';
+          button.setAttribute('data-bs-toggle', 'collapse');
+          button.setAttribute('data-bs-target', `#${collapseId}`);
+          button.setAttribute('aria-expanded', 'false');
+          button.setAttribute('aria-controls', collapseId);
+
+          const spanIcon = document.createElement('span');
+          spanIcon.className = 'me-2 text-danger';
+          if (cat.icon) {
+            spanIcon.innerHTML = `<i class="bi ${cat.icon}"></i>`;
+          }
+
+          const titleNode = document.createTextNode(' ' + cat.title);
+
+          button.appendChild(spanIcon);
+          button.appendChild(titleNode);
+          h2.appendChild(button);
+
+          const collapse = document.createElement('div');
+          collapse.id = collapseId;
+          collapse.className = 'accordion-collapse collapse';
+          collapse.setAttribute('aria-labelledby', headerId);
+          collapse.setAttribute('data-bs-parent', '#mijloaceAccordion');
+
+          const body = document.createElement('div');
+          body.className = 'accordion-body bg-white';
+
+          const listGroup = document.createElement('div');
+          listGroup.className = 'list-group';
+
+          cat.items.forEach((it) => {
+            const div = document.createElement('div');
+            div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
+            div.innerHTML = `<strong>${it.code} – ${it.label}</strong>`;
+            listGroup.appendChild(div);
+          });
+
+          body.appendChild(listGroup);
+          collapse.appendChild(body);
+          item.appendChild(h2);
+          item.appendChild(collapse);
+
+          container.appendChild(item);
+        });
+      }
+
+      // 4) Primul material care a ars
+      function renderPrimulMaterialAccordion() {
+        const container = document.getElementById('materialArsAccordion');
+        // în date.js trebuie să existe: const primulMaterialCareAAars = [ {title, items:[{code,label}, ...]}, ... ]
+        if (!container || !Array.isArray(primulMaterialCareAAars)) return;
+
+        primulMaterialCareAAars.forEach((cat, index) => {
+          const headerId = `materialArsHeading${index}`;
+          const collapseId = `materialArsCollapse${index}`;
+
+          const item = document.createElement('div');
+          item.className = 'accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2';
+
+          const h2 = document.createElement('h2');
+          h2.className = 'accordion-header';
+          h2.id = headerId;
+
+          const button = document.createElement('button');
+          button.className = 'accordion-button collapsed bg-white';
+          button.type = 'button';
+          button.setAttribute('data-bs-toggle', 'collapse');
+          button.setAttribute('data-bs-target', `#${collapseId}`);
+          button.setAttribute('aria-expanded', 'false');
+          button.setAttribute('aria-controls', collapseId);
+
+          const spanIcon = document.createElement('span');
+          spanIcon.className = 'me-2 text-danger';
+          spanIcon.innerHTML = '<i class="bi bi-fire"></i>';
+
+          const titleNode = document.createTextNode(' ' + cat.title);
+
+          button.appendChild(spanIcon);
+          button.appendChild(titleNode);
+          h2.appendChild(button);
+
+          const collapse = document.createElement('div');
+          collapse.id = collapseId;
+          collapse.className = 'accordion-collapse collapse';
+          collapse.setAttribute('aria-labelledby', headerId);
+          collapse.setAttribute('data-bs-parent', '#materialArsAccordion');
+
+          const body = document.createElement('div');
+          body.className = 'accordion-body bg-white';
+
+          const listGroup = document.createElement('div');
+          listGroup.className = 'list-group';
+
+          if (Array.isArray(cat.items)) {
+            cat.items.forEach((it) => {
+              const div = document.createElement('div');
+              div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
+              div.innerHTML = `<strong>${it.code} – ${it.label}</strong>`;
+              listGroup.appendChild(div);
+            });
+          }
+
+          body.appendChild(listGroup);
+          collapse.appendChild(body);
+          item.appendChild(h2);
+          item.appendChild(collapse);
+
+          container.appendChild(item);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        renderLocatii();
+        renderSursaAprindere();
+        renderMijloaceAccordion();
+        renderPrimulMaterialAccordion();
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+	
