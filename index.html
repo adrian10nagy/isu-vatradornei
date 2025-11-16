@@ -179,7 +179,7 @@
     <script src="date.js"></script>
 
     <!-- 2) Script de randare -->
-    <script>
+   <script>
   function renderSimpleList(containerId, dataArray, formatter) {
     const container = document.getElementById(containerId);
     if (!container || !Array.isArray(dataArray)) return;
@@ -201,7 +201,8 @@
       const collapseId = `${containerId}Collapse${index}`;
 
       const item = document.createElement("div");
-      item.className = "accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2";
+      item.className =
+        "accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2";
 
       const h2 = document.createElement("h2");
       h2.className = "accordion-header";
@@ -256,6 +257,15 @@
     });
   }
 
+  // 🔠 normalizare text: fără diacritice + lowercase
+  function normalizeText(str) {
+    return (str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  }
+
   // Construim un index global pentru căutare
   function buildGlobalIndex(locatiiItems, sursaAprindereItems) {
     const index = [];
@@ -265,9 +275,12 @@
       items.forEach((it) => {
         index.push({
           section: sectionName,
+          sectionNorm: normalizeText(sectionName),
           category: null,
+          categoryNorm: "",
           code: String(it.code),
           label: it.label || "",
+          labelNorm: normalizeText(it.label || ""),
         });
       });
     };
@@ -277,12 +290,17 @@
 
     if (Array.isArray(mijloaceData)) {
       mijloaceData.forEach((cat) => {
+        const catTitle = cat.title || "";
+        const catNorm = normalizeText(catTitle);
         (cat.items || []).forEach((it) => {
           index.push({
             section: "Mijloace care pot produce arderea",
-            category: cat.title || "",
+            sectionNorm: normalizeText("Mijloace care pot produce arderea"),
+            category: catTitle,
+            categoryNorm: catNorm,
             code: String(it.code),
             label: it.label || "",
+            labelNorm: normalizeText(it.label || ""),
           });
         });
       });
@@ -290,12 +308,17 @@
 
     if (Array.isArray(primulMaterialCareAAars)) {
       primulMaterialCareAAars.forEach((cat) => {
+        const catTitle = cat.title || "";
+        const catNorm = normalizeText(catTitle);
         (cat.items || []).forEach((it) => {
           index.push({
             section: "Primul material care a ars",
-            category: cat.title || "",
+            sectionNorm: normalizeText("Primul material care a ars"),
+            category: catTitle,
+            categoryNorm: catNorm,
             code: String(it.code),
             label: it.label || "",
+            labelNorm: normalizeText(it.label || ""),
           });
         });
       });
@@ -303,12 +326,17 @@
 
     if (Array.isArray(imprejurariData)) {
       imprejurariData.forEach((cat) => {
+        const catTitle = cat.title || "";
+        const catNorm = normalizeText(catTitle);
         (cat.items || []).forEach((it) => {
           index.push({
             section: "Împrejurarea determinantă",
-            category: cat.title || "",
+            sectionNorm: normalizeText("Împrejurarea determinantă"),
+            category: catTitle,
+            categoryNorm: catNorm,
             code: String(it.code),
             label: it.label || "",
+            labelNorm: normalizeText(it.label || ""),
           });
         });
       });
@@ -317,13 +345,11 @@
     return index;
   }
 
-  // UI pentru rezultate: grupare pe secțiune, cu secțiune mică sus și subsecțiune + text dedesubt
+  // UI pentru rezultate: grupare pe secțiune
   function renderSearchResults(resultsContainer, results, query) {
     resultsContainer.innerHTML = "";
 
-    if (!query) {
-      return;
-    }
+    if (!query) return;
 
     if (!results.length) {
       const empty = document.createElement("div");
@@ -333,7 +359,6 @@
       return;
     }
 
-    // Grupăm rezultatele pe secțiune
     const bySection = {};
     results.forEach((r) => {
       if (!bySection[r.section]) {
@@ -346,7 +371,6 @@
       const sectionBlock = document.createElement("div");
       sectionBlock.className = "mb-3";
 
-      // Header mic de secțiune (părinte)
       const header = document.createElement("div");
       header.className =
         "d-inline-block px-2 py-1 rounded bg-primary bg-opacity-10 text-primary text-uppercase small fw-semibold mb-2";
@@ -411,10 +435,18 @@
     renderAccordion("mijloaceAccordion", mijloaceData, "bi-fire");
 
     // 4) Primul material care a ars (sub-accordion)
-    renderAccordion("materialArsAccordion", primulMaterialCareAAars, "bi-droplet-half");
+    renderAccordion(
+      "materialArsAccordion",
+      primulMaterialCareAAars,
+      "bi-droplet-half"
+    );
 
     // 5) Împrejurarea determinantă (sub-accordion)
-    renderAccordion("imprejurariAccordion", imprejurariData, "bi-exclamation-triangle");
+    renderAccordion(
+      "imprejurariAccordion",
+      imprejurariData,
+      "bi-exclamation-triangle"
+    );
 
     // 🔍 Search global
     const globalIndex = buildGlobalIndex(locatiiItems, sursaAprindereItems);
@@ -423,27 +455,31 @@
 
     function handleGlobalSearch() {
       const raw = searchInput.value || "";
-      const query = raw.trim().toLowerCase();
+      const queryNorm = normalizeText(raw);
       resultsContainer.innerHTML = "";
 
-      if (!query) return;
+      if (!queryNorm) return;
 
-      const isNumber = !isNaN(query);
+      const trimmedRaw = raw.trim();
+      const isNumber = trimmedRaw !== "" && !isNaN(trimmedRaw);
+
       const results = globalIndex.filter((entry) => {
-        const codeMatch = isNumber && entry.code === query;
-        const labelMatch = entry.label.toLowerCase().includes(query);
+        const codeMatch = isNumber && entry.code === trimmedRaw;
+        const labelMatch = entry.labelNorm.includes(queryNorm);
         const catMatch =
-          entry.category && entry.category.toLowerCase().includes(query);
-        const sectionMatch = entry.section.toLowerCase().includes(query);
+          entry.categoryNorm && entry.categoryNorm.includes(queryNorm);
+        const sectionMatch =
+          entry.sectionNorm && entry.sectionNorm.includes(queryNorm);
         return codeMatch || labelMatch || catMatch || sectionMatch;
       });
 
-      renderSearchResults(resultsContainer, results, query);
+      renderSearchResults(resultsContainer, results, queryNorm);
     }
 
     searchInput.addEventListener("input", handleGlobalSearch);
   });
 </script>
+
 
 
     <!-- Bootstrap JS (obligatoriu pt. accordion/collapse) -->
