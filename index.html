@@ -9,31 +9,31 @@
   </head>
   <body class="bg-light">
     <div class="container py-5">
-      <!-- 1) Destinația locului producerii evenimentului -->
-      <h1 class="h4 mb-4 text-danger">Destinația locului producerii evenimentului</h1>
 
-      <div class="accordion mb-4" id="sectiunea1">
+      <!-- 1) Destinația locului producerii evenimentului -->
+      <div class="accordion mb-4" id="sectiuneaLoc">
         <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
-          <h2 class="accordion-header" id="heading1">
+          <h2 class="accordion-header" id="headingLoc">
             <button
               class="accordion-button collapsed bg-white"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#collapse1"
+              data-bs-target="#collapseLoc"
               aria-expanded="false"
-              aria-controls="collapse1"
+              aria-controls="collapseLoc"
             >
-              <span class="me-2 text-danger"><i class="bi bi-caret-down-square"></i></span>
-              Lista locațiilor posibile
+              <span class="me-2 text-danger"><i class="bi bi-geo-alt"></i></span>
+              Destinația locului producerii evenimentului
             </button>
           </h2>
           <div
-            id="collapse1"
+            id="collapseLoc"
             class="accordion-collapse collapse"
-            aria-labelledby="heading1"
-            data-bs-parent="#sectiunea1"
+            aria-labelledby="headingLoc"
+            data-bs-parent="#sectiuneaLoc"
           >
             <div class="accordion-body bg-white">
+              <!-- DOAR LISTA, fără titlu intermediar -->
               <div id="listaLocatii" class="list-group"></div>
             </div>
           </div>
@@ -41,43 +41,121 @@
       </div>
 
       <!-- 2) Sursa probabilă de aprindere -->
-      <h1 class="h4 mb-4 text-danger">Sursa Probabilă de Aprindere</h1>
-
-      <div class="accordion mb-4" id="sectiunea2">
+      <div class="accordion mb-4" id="sectiuneaSursa">
         <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
-          <h2 class="accordion-header" id="heading2">
+          <h2 class="accordion-header" id="headingSursa">
             <button
               class="accordion-button collapsed bg-white"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#collapse2"
+              data-bs-target="#collapseSursa"
               aria-expanded="false"
-              aria-controls="collapse2"
+              aria-controls="collapseSursa"
             >
               <span class="me-2 text-danger"><i class="bi bi-fire"></i></span>
-              Lista surselor probabile de aprindere
+              Sursa Probabilă de Aprindere
             </button>
           </h2>
           <div
-            id="collapse2"
+            id="collapseSursa"
             class="accordion-collapse collapse"
-            aria-labelledby="heading2"
-            data-bs-parent="#sectiunea2"
+            aria-labelledby="headingSursa"
+            data-bs-parent="#sectiuneaSursa"
           >
             <div class="accordion-body bg-white">
+              <!-- DOAR LISTA -->
               <div id="listaSursaAprindere" class="list-group"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 3) Mijloace care pot produce arderea -->
-      <h1 class="h4 mb-4 text-danger">Mijloace care pot produce arderea</h1>
-      <div class="accordion mb-4" id="mijloaceAccordion"></div>
+      <!-- 3) Mijloace care pot produce arderea (are sub-secțiuni) -->
+      <div class="accordion mb-4" id="sectiuneaMijloaceWrapper">
+        <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingMijloaceWrapper">
+            <button
+              class="accordion-button collapsed bg-white"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseMijloaceWrapper"
+              aria-expanded="false"
+              aria-controls="collapseMijloaceWrapper"
+            >
+              <span class="me-2 text-danger"><i class="bi bi-fire"></i></span>
+              Mijloace care pot produce arderea
+            </button>
+          </h2>
+          <div
+            id="collapseMijloaceWrapper"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingMijloaceWrapper"
+            data-bs-parent="#sectiuneaMijloaceWrapper"
+          >
+            <div class="accordion-body bg-white">
+              <div class="accordion" id="mijloaceAccordion"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <!-- 4) Primul material care a ars -->
-      <h1 class="h4 mb-4 text-danger">Primul material care a ars</h1>
-      <div class="accordion" id="materialArsAccordion"></div>
+      <!-- 4) Primul material care a ars (are sub-secțiuni) -->
+      <div class="accordion mb-4" id="sectiuneaMaterialWrapper">
+        <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingMaterialWrapper">
+            <button
+              class="accordion-button collapsed bg-white"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseMaterialWrapper"
+              aria-expanded="false"
+              aria-controls="collapseMaterialWrapper"
+            >
+              <span class="me-2 text-danger"><i class="bi bi-droplet-half"></i></span>
+              Primul material care a ars
+            </button>
+          </h2>
+          <div
+            id="collapseMaterialWrapper"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingMaterialWrapper"
+            data-bs-parent="#sectiuneaMaterialWrapper"
+          >
+            <div class="accordion-body bg-white">
+              <div class="accordion" id="materialArsAccordion"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5) Împrejurarea determinantă (are sub-secțiuni) -->
+      <div class="accordion mb-4" id="sectiuneaImprejurariWrapper">
+        <div class="accordion-item border-2 border-danger rounded-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingImprejurariWrapper">
+            <button
+              class="accordion-button collapsed bg-white"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseImprejurariWrapper"
+              aria-expanded="false"
+              aria-controls="collapseImprejurariWrapper"
+            >
+              <span class="me-2 text-danger"><i class="bi bi-exclamation-triangle"></i></span>
+              Împrejurarea determinantă
+            </button>
+          </h2>
+          <div
+            id="collapseImprejurariWrapper"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingImprejurariWrapper"
+            data-bs-parent="#sectiuneaImprejurariWrapper"
+          >
+            <div class="accordion-body bg-white">
+              <div class="accordion" id="imprejurariAccordion"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
 
@@ -86,144 +164,68 @@
 
     <!-- 2) Script de randare -->
     <script>
-      function renderLocatii() {
-        const container = document.getElementById('listaLocatii');
-        if (!container || !Array.isArray(locatiiData)) return;
+      function renderSimpleList(containerId, dataArray, formatter) {
+        const container = document.getElementById(containerId);
+        if (!container || !Array.isArray(dataArray)) return;
 
-        locatiiData.forEach((it) => {
-          const div = document.createElement('div');
-          div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
-          div.innerHTML = `<strong>${it.nr} – ${it.den}</strong>`;
+        dataArray.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "list-group-item border-2 border-primary rounded-3 mb-2";
+          div.innerHTML = formatter(item);
           container.appendChild(div);
         });
       }
 
-      function renderSursaAprindere() {
-        const container = document.getElementById('listaSursaAprindere');
-        if (!container || !Array.isArray(sursaAprindereData)) return;
+      function renderAccordion(containerId, dataArray, iconDefault = "bi-list-ul") {
+        const container = document.getElementById(containerId);
+        if (!container || !Array.isArray(dataArray)) return;
 
-        sursaAprindereData.forEach((it) => {
-          const div = document.createElement('div');
-          div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
-          div.innerHTML = `<strong>${it.code} – ${it.label}</strong>`;
-          container.appendChild(div);
-        });
-      }
+        dataArray.forEach((cat, index) => {
+          const headerId = `${containerId}Heading${index}`;
+          const collapseId = `${containerId}Collapse${index}`;
 
-      function renderMijloaceAccordion() {
-        const container = document.getElementById('mijloaceAccordion');
-        if (!container || !Array.isArray(mijloaceData)) return;
+          const item = document.createElement("div");
+          item.className = "accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2";
 
-        mijloaceData.forEach((cat, index) => {
-          const headerId = `mijloaceHeading${index}`;
-          const collapseId = `mijloaceCollapse${index}`;
-
-          const item = document.createElement('div');
-          item.className = 'accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2';
-
-          const h2 = document.createElement('h2');
-          h2.className = 'accordion-header';
+          const h2 = document.createElement("h2");
+          h2.className = "accordion-header";
           h2.id = headerId;
 
-          const button = document.createElement('button');
-          button.className = 'accordion-button collapsed bg-white';
-          button.type = 'button';
-          button.setAttribute('data-bs-toggle', 'collapse');
-          button.setAttribute('data-bs-target', `#${collapseId}`);
-          button.setAttribute('aria-expanded', 'false');
-          button.setAttribute('aria-controls', collapseId);
+          const button = document.createElement("button");
+          button.className = "accordion-button collapsed bg-white";
+          button.type = "button";
+          button.setAttribute("data-bs-toggle", "collapse");
+          button.setAttribute("data-bs-target", `#${collapseId}`);
+          button.setAttribute("aria-expanded", "false");
+          button.setAttribute("aria-controls", collapseId);
 
-          const spanIcon = document.createElement('span');
-          spanIcon.className = 'me-2 text-danger';
-          if (cat.icon) {
-            spanIcon.innerHTML = `<i class="bi ${cat.icon}"></i>`;
-          }
+          const spanIcon = document.createElement("span");
+          spanIcon.className = "me-2 text-danger";
+          const icon = cat.icon || iconDefault;
+          spanIcon.innerHTML = `<i class="bi ${icon}"></i>`;
 
-          const titleNode = document.createTextNode(' ' + cat.title);
+          const titleNode = document.createTextNode(" " + cat.title);
 
           button.appendChild(spanIcon);
           button.appendChild(titleNode);
           h2.appendChild(button);
 
-          const collapse = document.createElement('div');
+          const collapse = document.createElement("div");
           collapse.id = collapseId;
-          collapse.className = 'accordion-collapse collapse';
-          collapse.setAttribute('aria-labelledby', headerId);
-          collapse.setAttribute('data-bs-parent', '#mijloaceAccordion');
+          collapse.className = "accordion-collapse collapse";
+          collapse.setAttribute("aria-labelledby", headerId);
+          collapse.setAttribute("data-bs-parent", `#${containerId}`);
 
-          const body = document.createElement('div');
-          body.className = 'accordion-body bg-white';
+          const body = document.createElement("div");
+          body.className = "accordion-body bg-white";
 
-          const listGroup = document.createElement('div');
-          listGroup.className = 'list-group';
-
-          cat.items.forEach((it) => {
-            const div = document.createElement('div');
-            div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
-            div.innerHTML = `<strong>${it.code} – ${it.label}</strong>`;
-            listGroup.appendChild(div);
-          });
-
-          body.appendChild(listGroup);
-          collapse.appendChild(body);
-          item.appendChild(h2);
-          item.appendChild(collapse);
-
-          container.appendChild(item);
-        });
-      }
-
-      // 4) Primul material care a ars
-      function renderPrimulMaterialAccordion() {
-        const container = document.getElementById('materialArsAccordion');
-        // în date.js trebuie să existe: const primulMaterialCareAAars = [ {title, items:[{code,label}, ...]}, ... ]
-        if (!container || !Array.isArray(primulMaterialCareAAars)) return;
-
-        primulMaterialCareAAars.forEach((cat, index) => {
-          const headerId = `materialArsHeading${index}`;
-          const collapseId = `materialArsCollapse${index}`;
-
-          const item = document.createElement('div');
-          item.className = 'accordion-item border-2 border-danger rounded-3 overflow-hidden mb-2';
-
-          const h2 = document.createElement('h2');
-          h2.className = 'accordion-header';
-          h2.id = headerId;
-
-          const button = document.createElement('button');
-          button.className = 'accordion-button collapsed bg-white';
-          button.type = 'button';
-          button.setAttribute('data-bs-toggle', 'collapse');
-          button.setAttribute('data-bs-target', `#${collapseId}`);
-          button.setAttribute('aria-expanded', 'false');
-          button.setAttribute('aria-controls', collapseId);
-
-          const spanIcon = document.createElement('span');
-          spanIcon.className = 'me-2 text-danger';
-          spanIcon.innerHTML = '<i class="bi bi-fire"></i>';
-
-          const titleNode = document.createTextNode(' ' + cat.title);
-
-          button.appendChild(spanIcon);
-          button.appendChild(titleNode);
-          h2.appendChild(button);
-
-          const collapse = document.createElement('div');
-          collapse.id = collapseId;
-          collapse.className = 'accordion-collapse collapse';
-          collapse.setAttribute('aria-labelledby', headerId);
-          collapse.setAttribute('data-bs-parent', '#materialArsAccordion');
-
-          const body = document.createElement('div');
-          body.className = 'accordion-body bg-white';
-
-          const listGroup = document.createElement('div');
-          listGroup.className = 'list-group';
+          const listGroup = document.createElement("div");
+          listGroup.className = "list-group";
 
           if (Array.isArray(cat.items)) {
             cat.items.forEach((it) => {
-              const div = document.createElement('div');
-              div.className = 'list-group-item border-2 border-primary rounded-3 mb-2';
+              const div = document.createElement("div");
+              div.className = "list-group-item border-2 border-primary rounded-3 mb-2";
               div.innerHTML = `<strong>${it.code} – ${it.label}</strong>`;
               listGroup.appendChild(div);
             });
@@ -238,15 +240,45 @@
         });
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        renderLocatii();
-        renderSursaAprindere();
-        renderMijloaceAccordion();
-        renderPrimulMaterialAccordion();
+      document.addEventListener("DOMContentLoaded", () => {
+        // Extragem ITEMS din structurile cu title+items pentru 1 și 2
+        const locatiiItems =
+          Array.isArray(locatiiData) && locatiiData[0]?.items
+            ? locatiiData[0].items
+            : locatiiData;
+
+        const sursaAprindereItems =
+          Array.isArray(sursaAprindereData) && sursaAprindereData[0]?.items
+            ? sursaAprindereData[0].items
+            : sursaAprindereData;
+
+        // 1) Locații – DOAR LISTA
+        renderSimpleList(
+          "listaLocatii",
+          locatiiItems,
+          (it) => `<strong>${it.code} – ${it.label}</strong>`
+        );
+
+        // 2) Sursa probabilă – DOAR LISTA
+        renderSimpleList(
+          "listaSursaAprindere",
+          sursaAprindereItems,
+          (it) => `<strong>${it.code} – ${it.label}</strong>`
+        );
+
+        // 3) Mijloace care pot produce arderea (sub-accordion)
+        renderAccordion("mijloaceAccordion", mijloaceData, "bi-fire");
+
+        // 4) Primul material care a ars (sub-accordion)
+        renderAccordion("materialArsAccordion", primulMaterialCareAAars, "bi-droplet-half");
+
+        // 5) Împrejurarea determinantă (sub-accordion)
+        renderAccordion("imprejurariAccordion", imprejurariData, "bi-exclamation-triangle");
       });
     </script>
 
+    <!-- *** AICI ERA PROBLEMA: trebuie neapărat Bootstrap JS *** -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   </body>
 </html>
-	
